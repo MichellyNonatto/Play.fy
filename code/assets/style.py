@@ -1,6 +1,7 @@
 def styleText(cor, fonte, text):
     estilo = f'\033[{cor};{fonte}m'+text+'\033[m'
     return estilo
+    
 def titulo(text):
     limparTela()
     tam = 30

@@ -1,4 +1,5 @@
-import style
+from assets import style
+
 class Usuarios:
   import sqlite3
   def __init__(self, conn):
@@ -14,7 +15,7 @@ class Usuarios:
   def criarUsuario(self, usuario):
     self.cursor.execute("INSERT INTO USUARIO (nickname, email, senha, tipoUsuario) VALUES (?, ?, ?, ?);", usuario)
     self.conn.commit()
-    return print(f"Perfil criado com sucesso! Seja bem vindo '{style(1, 32, usuario[0])}'.")
+    return print(f"Perfil criado com sucesso! Seja bem vindo '{style.styleText(1, 32, usuario[0])}'.")
   
   def mostrarUsuario(self):
     self.cursor.execute("SELECT * FROM USUARIO")

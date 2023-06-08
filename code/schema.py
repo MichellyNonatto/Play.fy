@@ -11,7 +11,7 @@ def criarBanco(nomeBanco):
             "idUsuario" INTEGER,
              "nickname" VARCHAR(45) NOT NULL UNIQUE,
              "ultimoAcesso" DATE, 
-             "email" VARCHAR(45) NOT NULL, 
+             "email" VARCHAR(45) NOT NULL UNIQUE, 
              "senha" VARCHAR(12) NOT NULL, 
              "tipoUsuario" INT NOT NULL, 
              PRIMARY KEY("idUsuario" AUTOINCREMENT))""")

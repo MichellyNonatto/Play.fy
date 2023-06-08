@@ -4,8 +4,6 @@ from assets import usuario
 from assets import style
 
 def menu():
-    tam = 30
-
     opcoes = {
         "1": "Fazer Cadastro",
         "2": "Fazer Login",
@@ -15,8 +13,8 @@ def menu():
     while True:
         style.titulo("Menu Inicial")
         for k, v in opcoes.items():
-            print(f"|{f' {k} - {v}':{tam}}|")
-        print(f"+{'-' * tam}")
+            print(f"|{f' {k} - {v}':{30}}|")
+        print(f"+{'-' * 30}")
         op = input(style.styleText(0, 33, 'Selecione uma das opções:\t'))
         if op not in opcoes:
             print(style.styleText(7, 31, "\nOpção inválida!"))
@@ -33,7 +31,7 @@ if __name__ == '__main__':
     print(style.styleText(0, 32, "Conenctando com o banco..."))
     from time import sleep
     sleep(2)
-    conn = schema.criarBanco('bd.txt')
+    conn = schema.criarBanco('bancoDeDadosPlayFy.txt')
     
     user = usuario.Usuarios(conn)
 
@@ -45,42 +43,55 @@ if __name__ == '__main__':
             break      
         if tabela == "1":
             from sqlite3 import Error
+            style.limparTela()
             style.titulo(f"Menu - Cadastro")
-            nickname = input("\nInsira o seu nickname:\t") 
-            email = input("\nInsira o seu e-mail:\t")
-            
             while True:
-                senha = input("\nInsira sua senha:\t")
-                if len(senha) < 8: print("Mínimo de caracter é 8.")
+                nickname = input("\nInsira o seu nickname:\t")
+                if len(nickname) < 3: print(style.styleText(0, 33,"O nickname deve ter no mínimo 3 caracteres."))
                 else: break
-                print("\b")
+            while True:
+                import re
+                email = input("\nInsira o endereço de e-mail: ")
+                if re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email): break 
+                else: print(style.styleText(0, 33,f"Informe um e-mail válido. Exemplo {nickname}2023@gmail.com"))
+            while True:
+                senha = input("\nInsira sua senha: ")
+                if len(senha) < 8: print(style.styleText(0, 33,"A senha deve ter no mínimo 8 caracteres."))
+                else: break
 
-        listaTipoUsuario = {
-            "1": "Artista",
-            "2": "Ouvinte",
-            "0": "Cancelar Cadastro"
-        }
+            listaTipoUsuario = {
+                "1": "Artista",
+                "2": "Ouvinte",
+                "0": "Cancelar Cadastro"
+            }
 
-        while True:
-            from sqlite3 import Error
-            print("\nLista tipo usuário\n")
-            for k, v in listaTipoUsuario.items():
-                print(f"{k} - {v}")
-            tipoUsuario = input(style.styleText(0, 33, 'Selecione uma das opções:\t'))
-            if tipoUsuario not in listaTipoUsuario:
-                print(style.styleText(7, 31, "\nOpção inválida!"))
-            elif tipoUsuario == '0':
-                print(style.styleText(0, 32, "Cadastro do usuário cancelada."))
-                break
-            else:
-                novoUsuario = (nickname, email, senha, tipoUsuario, )
-
-            try:
-                user.criarUsuario(novoUsuario)
-            except Error as e:
+            while True:
+                from sqlite3 import Error
                 style.limparTela()
-                print("É necessário preencher todos os campos.")
+                style.titulo("Tipo usuário")
+                for k, v in listaTipoUsuario.items():
+                    print(f"|{f' {k} - {v}':{30}}|")
+                print(f"+{'-' * 30}")
+                tipoUsuario = input(style.styleText(0, 33, 'Selecione uma das opções:\t'))
+                if tipoUsuario not in listaTipoUsuario:
+                    print(style.styleText(7, 31, "\nOpção inválida!"))
+                    continue
+                elif tipoUsuario == '0':
+                    print(style.styleText(0, 32, "Cadastro do usuário cancelado."))
+                    break
+                else:
+                    novoUsuario = (nickname, email, senha, tipoUsuario, )
+
+                try:
+                    user.criarUsuario(novoUsuario)
+                    sleep(5)
+                    break
+                except Error as e:
+                    style.limparTela()
+                    print(style.styleText(0, 33, "Nickname ou e-mail já existente em nossa plataforma, faça o login para acessar a sua conta."))
+                    sleep(5)
+                    break
 
 style.limparTela()
-print(style(0, 32, "Programa finalizado com sucesso!"))
+print(style.styleText(0, 32, "Programa finalizado com sucesso!"))
         
