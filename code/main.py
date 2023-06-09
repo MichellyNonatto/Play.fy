@@ -46,7 +46,7 @@ if __name__ == '__main__':
             style.limparTela()
             style.titulo(f"Menu - Cadastro")
             while True:
-                nickname = input("\nInsira o seu nickname:\t")
+                nickname = input("\nInsira o seu nickname:\t").capitalize()
                 if len(nickname) < 3: print(style.styleText(0, 33,"O nickname deve ter no mínimo 3 caracteres."))
                 else: break
             while True:
@@ -80,18 +80,20 @@ if __name__ == '__main__':
                     print(style.styleText(0, 32, "Cadastro do usuário cancelado."))
                     break
                 else:
-                    novoUsuario = (nickname, email, senha, tipoUsuario, )
+                    from datetime import date
+                    ultimoAcesso = date.today()
+                    novoUsuario = (nickname, ultimoAcesso, email, senha, tipoUsuario, )
 
                 try:
                     user.criarUsuario(novoUsuario)
                     sleep(5)
-                    break
                 except Error as e:
                     style.limparTela()
                     print(style.styleText(0, 33, "Nickname ou e-mail já existente em nossa plataforma, faça o login para acessar a sua conta."))
                     sleep(5)
-                    break
+                    continue
+                break
 
 style.limparTela()
 print(style.styleText(0, 32, "Programa finalizado com sucesso!"))
-        
+user.mostrarUsuario()

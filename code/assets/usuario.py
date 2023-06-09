@@ -3,9 +3,8 @@ from assets import style
 class Usuarios:
   import sqlite3
   def __init__(self, conn):
-    from datetime import date
     self.nickname = ""
-    self.ultimoAcesso = date.today()
+    self.ultimoAcesso = ""
     self.email = ""
     self.senha = ""
     self.tipoUsuario = ""
@@ -13,7 +12,7 @@ class Usuarios:
     self.cursor = self.conn.cursor()
 
   def criarUsuario(self, usuario):
-    self.cursor.execute("INSERT INTO USUARIO (nickname, email, senha, tipoUsuario) VALUES (?, ?, ?, ?);", usuario)
+    self.cursor.execute("INSERT INTO USUARIO (nickname, ultimoAcesso, email, senha, tipoUsuario) VALUES (?, ?, ?, ?, ?);", usuario)
     self.conn.commit()
     return print(f"Perfil criado com sucesso! Seja bem vindo '{style.styleText(1, 32, usuario[0])}'.")
   
