@@ -108,11 +108,13 @@ if __name__ == '__main__':
                     print(style.styleText(0, 33, "Os campos nickname e senha não podem estar vazios."))
                     sleep(3)
                     continue
-                else: break
-                        
-            usuario = (nickname, senha, )
-            loginUsuario = (usuario)
-        continue       
+                else:     
+                    usuario = (nickname, senha, )
+                    loginUsuario = (usuario)
+                    user.conectarUsuario(loginUsuario, ultimoAcesso)
+                    sleep(3)
+                    break
+               
 
 
 style.limparTela()

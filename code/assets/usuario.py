@@ -26,7 +26,7 @@ class Usuarios:
       print(style.styleText(0, 33, "\nNickname ou senha incorretos, tente novamente ou faça o seu cadastro."))
 
   def mostrarUsuario(self):
-    self.cursor.execute("SELECT nickname, email, tipoUsuario FROM USUARIO")
+    self.cursor.execute("SELECT nickname, email, tipoUsuario FROM USUARIO;")
     resultado = self.cursor.fetchall()
     if resultado:
       print("{:<30} {:<40} {:<30}".format(f"{style.styleText(1,34,'Nickname')}", f"{style.styleText(1,34,'E-mail')}", f"{style.styleText(1,34,'Tipo Usuário')}\n"))
