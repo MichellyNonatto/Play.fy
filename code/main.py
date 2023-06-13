@@ -24,6 +24,10 @@ def menu():
             break
     return op
 
+def submenu():
+
+    return
+
 if __name__ == '__main__':
     from getpass import getpass
     style.limparTela()
@@ -36,6 +40,7 @@ if __name__ == '__main__':
     
     user = usuario.Usuarios(conn)
 
+
     while True:
         tabela = menu()
         from datetime import date
@@ -46,7 +51,7 @@ if __name__ == '__main__':
             break      
         elif tabela == "1":
             style.limparTela()
-            style.titulo(f"Menu - Cadastro")
+            style.titulo("Menu - Cadastro")
             while True:
                 nickname = input("\nInsira o seu nickname:\t").lower()
                 if len(nickname) < 3: print(style.styleText(0, 33,"O nickname deve ter no mínimo 3 caracteres."))
@@ -68,7 +73,6 @@ if __name__ == '__main__':
             }
 
             while True:
-                from sqlite3 import Error
                 style.limparTela()
                 style.titulo("Tipo usuário")
                 for k, v in listaTipoUsuario.items():
@@ -87,26 +91,31 @@ if __name__ == '__main__':
                 try:
                     user.criarUsuario(novoUsuario)
                     sleep(5)
-                except Error as e:
+                except:
                     style.limparTela()
                     print(style.styleText(0, 33, "Nickname ou e-mail já existente em nossa plataforma, faça o login para acessar a sua conta."))
-                    sleep(5)
+                    sleep(3)
                 break
         elif tabela == "2":
             while True:
                 style.limparTela()
-                style.titulo(f"Menu - Login")
+                style.titulo("Menu - Login")
                 nickname = input("\nInsira o seu nickname:\t")
                 senha = input("Insira a sua senha: ")
-                usuario = (nickname, senha, )
-                loginUsuario = (usuario)
-                user.conectarUsuario(loginUsuario, ultimoAcesso)
-                sleep(5)
-                break
-                
-                
+
+                if not nickname or not senha: 
+                    style.limparTela()
+                    print(style.styleText(0, 33, "Os campos nickname e senha não podem estar vazios."))
+                    sleep(3)
+                    continue
+                else: break
+                        
+            usuario = (nickname, senha, )
+            loginUsuario = (usuario)
+        continue       
 
 
 style.limparTela()
-print(style.styleText(0, 32, "Programa finalizado com sucesso!"))
+print(style.styleText(0, 32, "Programa finalizado com sucesso!\n"))
 user.mostrarUsuario()
+print("\n")
