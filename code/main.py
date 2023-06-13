@@ -2,6 +2,7 @@ import schema
 
 from assets import usuario
 from assets import style
+from sqlite3 import Error
 
 def menu():
     opcoes = {
@@ -37,21 +38,22 @@ if __name__ == '__main__':
 
     while True:
         tabela = menu()
+        from datetime import date
+        ultimoAcesso = date.today()
         if tabela == "0":
             style.limparTela()
             print(style.styleText(0, 33, "Encerrando o programa...\n"))
             break      
-        if tabela == "1":
-            from sqlite3 import Error
+        elif tabela == "1":
             style.limparTela()
             style.titulo(f"Menu - Cadastro")
             while True:
-                nickname = input("\nInsira o seu nickname:\t").capitalize()
+                nickname = input("\nInsira o seu nickname:\t").lower()
                 if len(nickname) < 3: print(style.styleText(0, 33,"O nickname deve ter no mínimo 3 caracteres."))
                 else: break
             while True:
                 import re
-                email = input("\nInsira o endereço de e-mail: ")
+                email = input("\nInsira o endereço de e-mail: ").lower()
                 if re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email): break 
                 else: print(style.styleText(0, 33,f"Informe um e-mail válido. Exemplo {nickname}2023@gmail.com"))
             while True:
@@ -80,8 +82,6 @@ if __name__ == '__main__':
                     print(style.styleText(0, 32, "Cadastro do usuário cancelado."))
                     break
                 else:
-                    from datetime import date
-                    ultimoAcesso = date.today()
                     novoUsuario = (nickname, ultimoAcesso, email, senha, tipoUsuario, )
 
                 try:
@@ -91,8 +91,21 @@ if __name__ == '__main__':
                     style.limparTela()
                     print(style.styleText(0, 33, "Nickname ou e-mail já existente em nossa plataforma, faça o login para acessar a sua conta."))
                     sleep(5)
-                    continue
                 break
+        elif tabela == "2":
+            while True:
+                style.limparTela()
+                style.titulo(f"Menu - Login")
+                nickname = input("\nInsira o seu nickname:\t")
+                senha = input("Insira a sua senha: ")
+                usuario = (nickname, senha, )
+                loginUsuario = (usuario)
+                user.conectarUsuario(loginUsuario, ultimoAcesso)
+                sleep(5)
+                break
+                
+                
+
 
 style.limparTela()
 print(style.styleText(0, 32, "Programa finalizado com sucesso!"))

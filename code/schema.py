@@ -15,6 +15,18 @@ def criarBanco(nomeBanco):
              "senha" VARCHAR(12) NOT NULL, 
              "tipoUsuario" INT NOT NULL, 
              PRIMARY KEY("idUsuario" AUTOINCREMENT))""")
+        
+        #GENÊRO
+        generoMusical = ("Rock", "Hip Hop", "Eletrônica", "Jazz", "Pagode", "MPB", "Reggae", "Samba", "Funk")
+        c.execute("""CREATE TABLE IF NOT EXISTS GENERO (
+        "idGenero" INTEGER,
+        "nomeGenero" VARCHAR(45),
+        PRIMARY KEY ("idGenero" AUTOINCREMENT))""")
+
+        #ADICIONANDO VALORES DE GENÊRO
+        for n in range(len(generoMusical)):
+            c.execute("""INSERT INTO GENERO (nomeGenero) VALUES (?);""", (generoMusical[n], ))
+
         return conn
     
     except Error as e:
