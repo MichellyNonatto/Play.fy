@@ -82,13 +82,13 @@ class Perfil(Usuarios):
             print(estiloTexto(1, 32, f"Sua senha foi alterada com sucesso!\n"))
     
     def visualizarEmail(self, usuario):
-        self.cursor.execute("SELECT idUsuario FROM USUARIO WHERE nickname = ? and senha = ?;", usuario)
-        idUsuario = self.cursor.fetchone()[0]
+        self.cursor.execute("SELECT idUsuario FROM USUARIO WHERE nickname = ? and senha = ?;", (usuario))
+        idUsuario = self.cursor.fetchone()
         print(idUsuario)
         if idUsuario:
-            self.cursor.execute("SELECT email FROM USUARIO WHERE idUsuario = ?;", (idUsuario, ))
+            self.cursor.execute("SELECT email FROM USUARIO WHERE idUsuario = ?;", (idUsuario ))
             email = self.cursor.fetchone()[0]
-            print(email)
+        print(email)
 
 class Artista(Usuarios):
     def criarAlbum(self, nomeAlbum, usuario):

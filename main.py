@@ -77,7 +77,8 @@ if __name__ == '__main__':
             while True:
                 components.limparTela()
                 components.estiloTitulo(dictOpcoes["2"])
-                loginSenha = getpass("Informe a sua senha:\t")
+                get_password = lambda prompt: getpass(prompt)
+                loginSenha = get_password("Informe a sua senha:\t")
                 if not loginSenha:
                     print(components.estiloTexto(0, 33, "\nEsse campo não pode estar vazio."))
                     components.interacao(0)
@@ -165,7 +166,7 @@ if __name__ == '__main__':
                                     continue
                                 components.estiloTitulo(dictArtista['4'])
                                 artista.mostrarGenero()
-                                idGenero = components.validarInteiro(f"Informe o idUsuario de {adicionarMusica}:\t")
+                                idGenero = components.validarInteiro(f"Informe o idGenero de {adicionarMusica}:\t")
                                 if idGenero == False:
                                     components.limparTela()
                                     continue
@@ -228,7 +229,9 @@ if __name__ == '__main__':
                                     artista.mostraMusica(idAlbumVizualizarMusica)
                                     components.interacao()
                                     break
-                                    
+                            elif opcaoVizualizarMusica == '3':
+                                components.gerarGrafico()
+                                components.interacao()
                             elif opcaoVizualizarMusica == '0':
                                 break
                             else:

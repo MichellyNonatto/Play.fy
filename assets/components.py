@@ -85,4 +85,28 @@ def validarInteiro(textoInput, lpTela = 0, comTitulo = None):
                 interacao(0)
             
         
-            
+import matplotlib.pyplot as plt
+import sqlite3
+
+def gerarGrafico():
+    conn = sqlite3.connect('bancoDeDadosPlayFy.txt')
+    cursor = conn.cursor()
+
+    # Consulta SQL para obter a contagem de músicas por gênero
+    query = "SELECT GENERO.nomeGenero, COUNT(*) FROM MUSICA JOIN GENERO ON MUSICA.idGenero = GENERO.idGenero GROUP BY GENERO.idGenero"
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    # Extrai os dados do resultado da consulta
+    generos = [row[0] for row in result]
+    quantidade_musicas = [row[1] for row in result]
+
+    # Plotar o gráfico de barras
+    plt.bar(generos, quantidade_musicas)
+    plt.xlabel('Gênero')
+    plt.ylabel('Quantidade de Músicas')
+    plt.title('Quantidade de Músicas por Gênero')
+    plt.xticks(rotation=45)
+    plt.show()
+
+    conn.close()
